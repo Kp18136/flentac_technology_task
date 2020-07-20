@@ -1,0 +1,49 @@
+#include<stdio.h>
+#include<string.h>
+char patern[1003],test[100005];
+int main()
+{
+    int t,i,n,pl,tl,j,flag;
+    scanf("%d",&t);
+    while(t--)
+    {
+        scanf("%s%s",patern,test);
+        int pf[28],tf[28];
+        memset(pf,0,sizeof(pf));
+        memset(tf,0,sizeof(tf));
+        pl=strlen(patern);
+        tl=strlen(test);
+        if(tl<pl)
+        {
+            puts("NO");
+            continue;
+        }
+        for(i=0;i<pl;i++)
+            pf[patern[i]-'a']++;
+        for(i=0;i<pl;i++)
+            tf[test[i]-'a']++;
+        flag=0;
+        for(i=0;i<28;i++)
+            if(pf[i]!=tf[i])
+            {
+                flag=1;
+                break;
+            }
+        for(i=pl;i<tl;i++)
+        {
+            flag=0;
+            tf[test[i-pl]-'a']--;
+            tf[test[i]-'a']++;
+            for(j=0;j<28;j++)
+            if(pf[j]!=tf[j])
+            {
+                flag=1;
+                break;
+            }
+            if(flag==0) break;
+        }
+        if(flag==1) puts("NO");
+        else puts("YES");
+    }
+    return 0;
+}
